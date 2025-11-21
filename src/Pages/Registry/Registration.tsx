@@ -6,11 +6,18 @@ import { handleSubmit } from "../../server.tsx";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {validationSchema, initialValues, type RestaurantRegistration} from "./Interface.tsx";
+import "../../i18next.ts"
+import { useTranslation } from 'react-i18next';
 
 
 
 
 const Registration = () => {
+    const { t, i18n } = useTranslation();
+    const handleLanguageToggle = () => {
+        const newLang = i18n.language === 'en' ? 'ar' : 'en';
+        i18n.changeLanguage(newLang);
+    };
 const navigate=useNavigate();
     const onSubmit = async (values: any, formikHelpers: any) => {
         try {
@@ -52,10 +59,16 @@ const navigate=useNavigate();
                             <div className="flex flex-col content-between">
                                 <div id="header" className="grid grid-cols-[repeat(4,_1fr)] grid-rows-1">
                                     <div className="text-2xl [grid-area:1/1/2/4] text-left pb-2 2xl:text-4xl">
-                                        Create a Restaurant Account
+                                        {t(`main_title`)}
                                     </div>
                                     <p className="text-shnp-orange [grid-area:1/4/2/5] hover:bg-[#FFE0C8FF] p-1 rounded-full mb-1 2xl:text-4xl">
-                                        العربية
+                                        <button
+                                            type="button"
+                                            onClick={handleLanguageToggle}
+                                            className="text-shnp-orange [grid-area:1/4/2/5] hover:bg-[#FFE0C8FF] p-1 rounded-full mb-1 2xl:text-4xl"
+                                        >
+                                            {i18n.language === 'en' ? 'العربية' : 'English'}
+                                        </button>
                                     </p>
                                 </div>
                             </div>
@@ -75,7 +88,7 @@ const navigate=useNavigate();
                                         className="rounded-3xl bg-shnp-orange w-fit p-2 text-white
                                         2xl:p-6 2xl:rounded-4xl 2xl:text-2xl md:justify-self-end"
                                     >
-                                        Create Account
+                                        {t(`submit_btn`)}
                                     </button>
                                 </div>
                             </Form>

@@ -26,6 +26,20 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family:"DINar";
+    src: local("DINar"), url("./fonts/DINar.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:lang(en){
+    font-family: Yaro, sans-serif;
+}
+:lang(ar){
+    font-family:DINar,cairo, sans-serif;
+}
+
 *:focus {
     outline: none !important;
 
@@ -115,6 +129,17 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 
 }
+
+
+.rtl .text-left {
+    text-align: right !important;
+}
+
+.rtl .ps-4 {
+    padding-right: 1rem !important;
+    padding-left: 0 !important;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

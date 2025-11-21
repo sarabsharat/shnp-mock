@@ -148,7 +148,7 @@ function Input({
                                             rounded-lg
                                             ${selected.includes(option.id) ? " border-shnp-orange text-shnp-orange" : "hover:bg-gray-100"}
                                         `}
-                                        // CHANGE 6: Pass the ID to handleToggle
+
                                         onClick={() => handleToggle(option.id)}
                                     >
                                         <div className={`
@@ -212,8 +212,9 @@ function Input({
                                 type="button"
                                 onClick={toggleVisibility}
 
-                                className="absolute right-0 top-1/2 transform -translate-y-1/2 pr-3 bg-none
-                                           text-[#9E9E9E] hover:text-shnp-orange"
+                                className="absolute top-1/2 -translate-y-1/2
+  [inset-inline-end:0] [padding-inline-end:0.75rem]
+  text-[#9E9E9E] hover:text-shnp-orange"
                             >
                                 {showPassword ? hide : eye}
                             </button>)}

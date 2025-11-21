@@ -5,10 +5,13 @@ import Uploads from "../../Components/Uploads.tsx";
 import { useFormikContext } from "formik";
 import { useState } from "react";
 import type { RestaurantRegistration, WorkingDetailType } from "./Interface.tsx";
+import {useTranslation} from "react-i18next";
 
 function ResInfo() {
+    const { t } = useTranslation();
     const [workingShifts, setWorkingShifts] = useState<WorkingDetailType[]>([]);
     const { values, setFieldValue } = useFormikContext<RestaurantRegistration>();
+
     const deleteShift = (index: number) => {
         const currentDetails = values.workingDetails || [];
         const updated: WorkingDetailType[] = [...currentDetails];
@@ -21,112 +24,143 @@ function ResInfo() {
         <>
             <div id="One"
                  className="flex flex-wrap flex-row p-4 gap-3 md:[grid-area: 1 / 1 / 3 / 2] 2xl:flex 2xl:flex-col ">
+
                 <div id="title" className="flex justify-start w-full h-fit text-left items-center gap-2">
                     <img className="2xl:w-19" alt="One" src={oneIcon}/>
-                    <p className="text-xl 2xl:text-4xl">Fill Out Restaurant Registration Form</p>
+                    <p className="text-xl 2xl:text-4xl">{t("sec1_title")}</p>
                 </div>
+
                 <p className="text-sm pl-4 block text-left mb-2 h-fit 2xl:text-2xl">
-                    Fill out your personal information to create an account tied to a Restaurant and Continue
+                    {t("sec1_desc")}
                 </p>
 
                 <div className="flex flex-col center m-1 gap-3 gap-y-10 flex-wrap md:grid md:grid-cols-[repeat(2,_1fr)] md:grid-rows-[repeat(12,_1fr)] md:gap-x-[8px] md:gap-y-7 md:items-baseline-last 2xl:grow-1 2xl:gap-y-3 ">
 
-                    <Input id={"1"} name="nameEn"
-                           placeholder="Enter your restaurant’s name in english"
-                           required={true} label="Restaurant Name in English"
-                    />
-                    <Input id={"3"} name="email"
-                           placeholder="Enter the email"
-                           required={true} label="Email"
-                    />
-                    <Input id={"2"} name="nameAr"
-                           placeholder="Enter your restaurant’s name in arabic" required={true}
-                           label="Restaurant Name in Arabic"
-                    />
-                    <Input id={"4"} name="bankAccountIban" placeholder="Enter your bank account iban"
-                           required={true}
-                           label="Bank Account IBAN"
-                    />
-                    <Input id={"5"} name="password" placeholder="Enter your password" type="password"
-                           required={true}
-                           label="Password"
-                    />
-                    <Input id={"6"} name="confirmPassword" placeholder="Confirm your password"
-                           type="password" required={true}
-                           label="Confirm Password"
-                    />
-                    <Input id={"7"} name="foodCategories" placeholder="Select your type of restaurant"
-                           required={true}
-                           type="select" label="Restaurant Type"
-                    />
-                    <Input id={"8"} name="registrationNumber"
-                           placeholder="Enter registration number consisting of 10 digits"
-                           required={true} label="Commercial Registration Number"
-                    />
-                    <Input id={"9"} name="operationRepresentativeEmailAddress"
-                           placeholder="Enter the restaurant rep. email address"
-                           required={true} label="Operation Representative Email"
-                    />
-                    <Input id={"10"} name="operationRepresentativePhoneNumber"
-                           placeholder="Enter the restaurant rep. phone number"
-                           required={true} type="phone" label="Operation Representative Phone Number"
-                    />
-                    <Input id={"11"}
-                           name="operationRepresentativeFullNameEn"
-                           placeholder="Enter the restaurant operation rep. full name in english"
-                           required={true} label="Operation Representative Full Name in English"
-                    />
-                    <Input id={"12"}
-                           name="operationRepresentativeFullNameAr"
-                           placeholder="Enter the restaurant operation rep. full name in arabic"
-                           required={true} label="Operation Representative Full Name in Arabic"
+                    <Input id="1" name="nameEn"
+                           placeholder={t("input1placeholder")}
+                           required={true} label={t("input1name")}
                     />
 
-                    <Input id={"13"} name="managementPhoneNumber" placeholder="Management phone number"
-                           required={true} type="phone"
-                           label="Management Phone Number"
+                    <Input id="2" name="nameAr"
+                           placeholder={t("input2placeholder")}
+                           required={true} label={t("input2name")}
                     />
-                    <Input id={"14"} name="mainBranchNameAr" placeholder="Enter main branch name in arabic"
-                           required={true}
-                           label="Main Branch Name in Arabic"
+
+                    <Input id="3" name="email"
+                           placeholder={t("input3placeholder")}
+                           required={true} label={t("input3name")}
                     />
-                    <Input id={"15"} name="mainBranchNameEn" placeholder="Enter main branch name in english"
-                           required={true}
-                           label="Main Branch Name in English"
+
+                    <Input id="4" name="bankAccountIban"
+                           placeholder={t("input4placeholder")}
+                           required={true} label={t("input4name")}
                     />
-                    <Input id={"16"} name="district" placeholder="Enter branch district"
+
+                    <Input id="5" name="password" type="password"
+                           placeholder={t("input5placeholder")}
+                           required={true} label={t("input5name")}
+                    />
+
+                    <Input id="6" name="confirmPassword" type="password"
+                           placeholder={t("input6placeholder")}
+                           required={true} label={t("input6name")}
+                    />
+
+                    <Input id="7" name="foodCategories" type="select"
+                           placeholder={t("input7placeholder")}
+                           required={true} label={t("input7name")}
+                    />
+
+                    <Input id="8" name="registrationNumber"
+                           placeholder={t("input8placeholder")}
+                           required={true} label={t("input8name")}
+                    />
+
+                    <Input id="9" name="operationRepresentativeEmailAddress"
+                           placeholder={t("input9placeholder")}
+                           required={true} label={t("input9name")}
+                    />
+
+                    <Input id="10" name="operationRepresentativePhoneNumber" type="phone"
+                           placeholder={t("input10placeholder")}
+                           required={true} label={t("input10name")}
+                    />
+
+                    <Input id="11" name="operationRepresentativeFullNameEn"
+                           placeholder={t("input11placeholder")}
+                           required={true} label={t("input11name")}
+                    />
+
+                    <Input id="12" name="operationRepresentativeFullNameAr"
+                           placeholder={t("input12placeholder")}
+                           required={true} label={t("input12name")}
+                    />
+
+                    <Input id="13" name="managementPhoneNumber" type="phone"
+                           placeholder={t("input13placeholder")}
+                           required={true} label={t("input13name")}
+                    />
+
+                    <Input id="14" name="mainBranchNameAr"
+                           placeholder={t("input14placeholder")}
+                           required={true} label={t("input14name")}
+                    />
+
+                    <Input id="15" name="mainBranchNameEn"
+                           placeholder={t("input15placeholder")}
+                           required={true} label={t("input15name")}
+                    />
+
+                    <Input id="16" name="district"
+                           placeholder={t("input16placeholder")}
+                           label={t("input16name")}
                            required={false}
-                           label="Branch District"
                     />
-                    <Input id={"17"} name="branchAddressName" placeholder="Enter branch address name"
+
+                    <Input id="17" name="branchAddressName"
+                           placeholder={t("input17placeholder")}
+                           label={t("input17name")}
                            required={false}
-                           label="Branch Address Name"
                     />
-                    <Input id={"18"} name="branchStreet" placeholder="Enter branch street" required={false}
-                           label="Branch Street"
-                    />
-                    <Input id={"19"} name="branchBuildingNumber" placeholder="Enter branch building number"
+
+                    <Input id="18" name="branchStreet"
+                           placeholder={t("input18placeholder")}
+                           label={t("input18name")}
                            required={false}
-                           label="Branch Building Number"/>
-                    <Input id={"20"} name="branchAddressDescription"
-                           placeholder="Enter branch address description" required={false}
-                           label="Branch Address Description"
                     />
-                    <Input id={"21"} name="twitterSocialMediaLink" placeholder="Enter your restaurant twitter page"
+
+                    <Input id="19" name="branchBuildingNumber"
+                           placeholder={t("input19placeholder")}
+                           label={t("input19name")}
                            required={false}
-                           label="Twitter Social Media Account"
                     />
-                    <Input id={"22"} name="instagramSocialMediaLink"
-                           placeholder="Enter your restaurant instagram page" required={false}
-                           label="Instagram Social Media Account"
+
+                    <Input id="20" name="branchAddressDescription"
+                           placeholder={t("input20placeholder")}
+                           label={t("input20name")}
+                           required={false}
+                    />
+
+                    <Input id="21" name="twitterSocialMediaLink"
+                           placeholder={t("input21placeholder")}
+                           label={t("input21name")}
+                           required={false}
+                    />
+
+                    <Input id="22" name="instagramSocialMediaLink"
+                           placeholder={t("input22placeholder")}
+                           label={t("input22name")}
+                           required={false}
                     />
 
                     <div className="flex justify-start gap-3 mb-4 mt-2 w-full flex-col">
-                        <Uploads id={"23"} name="mainRestaurantBranchMapsLink" type="link"
-                                 title="Google Maps Location Link"
+                        <Uploads id="23" name="mainRestaurantBranchMapsLink"
+                                 type="link"
+                                 title={t("input23name")}
                         />
-                        <Uploads id={"24"} name="workingDetails" type="work"
-                                 title="Working Hours Details"
+                        <Uploads id="24" name="workingDetails"
+                                 type="work"
+                                 title={t("input24name")}
                                  workingShifts={workingShifts}
                                  setWorkingShifts={setWorkingShifts}
                         />
@@ -152,7 +186,7 @@ function ResInfo() {
                                 </div>
                             ))
                         ) : (
-                            <p className="text-sm text-gray-500">No working hours added yet.</p>
+                            <p className="text-sm text-gray-500">{t("work_empty_err")}</p>
                         )}
                     </div>
 
@@ -162,4 +196,4 @@ function ResInfo() {
     )
 }
 
-export default ResInfo
+export default ResInfo;
