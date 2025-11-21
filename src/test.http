@@ -1,0 +1,67 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=WebStorm
+
+###
+POST https://app-stg.shnp.me/api/Restaurants
+Content-Type: application/json
+
+{
+  "nameAr": "تت",
+  "nameEn": "n",
+  "password": "8BC9ZnQwqtSfn5U@",
+  "preferredLocale": "en",
+  "district": "",
+  "documents": [
+    {
+      "documentTypeCode": "CompanyTaxRegistryRepresentative"
+    }
+  ],
+  "operationRepresentativePhoneNumber": "+966123456789",
+  "email": "jsadjakbsharat.sb@gmail.com",
+  "instagramSocialMediaLink": "",
+  "twitterSocialMediaLink": "",
+  "mainRestaurantBranchMapsLink": "",
+  "bankAccountIban": "SA1212121212212121212121",
+  "registrationNumber": "1234567990",
+  "operationRepresentativeEmailAddress": "sarabsharat.sb@gmail.com",
+  "operationRepresentativeFullNameEn": "Sara Ibsharat",
+  "operationRepresentativeFullNameAr": "ت",
+  "foodCategories": [
+    1
+  ],
+  "managementPhoneNumber": "+966123456789",
+  "workingDetails": [
+    {
+      "day": "Sunday",
+      "from": "12:00",
+      "to": "12:30"
+    }
+  ],
+  "documentLicenseNumber": [
+    "https://fra1.digitaloceanspaces.com/shnp/uploads/5426169ed6434f6397079a9331eebfd6.png"
+  ],
+  "documentTaxNumber": [
+    "https://fra1.digitaloceanspaces.com/shnp/uploads/3c412158e32a40bba81025a1dada9be4.png"
+  ],
+  "documentRegistry": [
+    "https://fra1.digitaloceanspaces.com/shnp/uploads/17c0e3080aef4d91989a20acfd991c93.png"
+  ],
+  "documentContract": [
+    "https://fra1.digitaloceanspaces.com/shnp/uploads/56e93044fe10474bb8d80f569e7c76d5.png"
+  ],
+  "latitude": 24.7136,
+  "longitude": 46.6753,
+  "mainBranchNameAr": "ت",
+  "mainBranchNameEn": "jhg",
+  "branchAddressName": "",
+  "branchMobile": "",
+  "branchStreet": "",
+  "branchAddressDescription": "",
+  "branchBuildingNumber": "",
+  "branchDistrict": "",
+  "branchCity": "",
+  "imageUrl": ["https://fra1.digitaloceanspaces.com/shnp/uploads/e605730391b24ebda9e00e2f2c15911f.png"],
+  "branchCountry": ""
+}
+

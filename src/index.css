@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@tailwind utilities;
+:root {
+  font-family: Yaro, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+    height: 100%;
+    width: 100%;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+    overflow: scroll;
+    scrollbar-color: #fe7c25 transparent;
+    scrollbar-width: auto;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@theme {
+    --color-shnp-orange:#fe7c25;
+}
+@font-face {
+    font-family: "Yaro";
+    src: local("Yaro"), url("./fonts/Yaro.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+*:focus {
+    outline: none !important;
+
+}
+.cont .react-tel-input .form-control{
+    display: flex;
+
+
+}
+.react-tel-input .form-control {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 10px !important;
+}
+
+a {
+  font-weight: 500;
+  color: #fe7c25;
+  text-decoration: none;
+
+}
+a:hover {
+  color: #fe7c25;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.typewriter {
+    overflow: hidden;
+    font-size: 1em;
+    text-align: left;
+    width:90%;
+
+    white-space: nowrap;
+    border-right: .15em solid #fe7c25;
+    margin: 0 auto;
+    letter-spacing: .001em;
+    animation:
+            typing 3.5s steps(30, end),
+            blink-caret .5s step-end infinite;}
+
+.typewriter p {
+    display: inline-block;
+    height:80px;
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+
+.inputst{
+    border-radius:10px ;
+}
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange }
+}
+button:hover {
+  border-color: #fe7c25;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+}
+
