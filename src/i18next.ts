@@ -1,7 +1,5 @@
 import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next'; // Remove if not using React
-
-
+import { initReactI18next } from 'react-i18next';
 import en from './locales/en.json';
 import ar from './locales/ar.json';
 
@@ -21,7 +19,6 @@ i18next
         }
     });
 i18next.on('languageChanged', (lng) => {
-    document.documentElement.setAttribute('lang', lng);
     document.documentElement.lang = lng;
     document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
     document.documentElement.classList.toggle("rtl", lng === "ar");

@@ -32,7 +32,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
 
     const uploadIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
-             className="size-6 text-[#E0E0E0]">
+             className="size-6 text-[#E0E0E0] lg:size-12 ">
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
         </svg>
@@ -51,11 +51,12 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
     //region var
     const [activeModalId, setActiveModalId] = useState<string | null>(null);
     const [, meta] = useField(name);
-    const displayError = meta.touched && meta.error;
     const [workingForm, setWorkingDetail] = useState<WorkingDetailType>({day: "", from: "",to: "" });
     const [previewSrc, setPreviewSrc] = useState<string | null>(null);
     const [pendingDocument, setPendingDocument] = useState<{ name: string; url: string } | null>(null);
-    const {setFieldValue, values} = useFormikContext<RestaurantRegistration>();
+    const {setFieldValue, values,submitCount} = useFormikContext<RestaurantRegistration>();
+    // const displayError = (meta.touched || submitCount > 0) && meta.error;
+    const displayError = meta.error;
 
 
     //endregion
@@ -185,6 +186,13 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
     }
     //endregion
 
+    console.log(`Field: ${name}`, {
+        touched: meta.touched,
+        submitCount: submitCount,
+        error: meta.error,
+        value: meta.value
+    });
+
     return (
         <>
             {type === 'work' && (
@@ -198,6 +206,14 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                             </button>
                         </div>
                     </div>
+                    {displayError && (
+                        <p className="text-red-500 text-xs 2xl:text-sm mt-1">
+
+                            {typeof meta.error === 'string'
+                                ? meta.error
+                                : "Please add valid working details"}
+                        </p>
+                    )}
                 </div>
             )}
 
@@ -251,14 +267,6 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                             </div>
                         )}
                     </div>
-                    {displayError && (
-                        <p
-                            id={`${id}-error`}
-                            className="text-red-500 text-xs text-clip 2xl:text-sm mt-1 absolute left-0 top-full"
-                        >
-                            {Array.isArray(meta.error) ? meta.error.join(', ') : meta.error}
-                        </p>
-                    )}
 
                     <label htmlFor={id}>
                         <div className="flex justify-items-start">
@@ -268,6 +276,14 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                             </button>
                         </div>
                     </label>
+                    { displayError && (
+                        <p className="text-red-500 text-xs 2xl:text-sm mt-1">
+
+                            {typeof meta.error === 'string'
+                                ? meta.error
+                                : "Please upload an image"}
+                        </p>
+                    )}
                 </div>
             )}
 

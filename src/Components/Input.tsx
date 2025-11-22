@@ -10,7 +10,7 @@ function Input({
                }: InputType) {
     //formik
     const [field, meta] = useField(name);
-    const displayError = meta.touched && meta.error;
+    const displayError = meta.error;
     const [showPassword, setShowPassword] = useState(false);
     const isPasswordField = type === "password";
     const isSelectField = type === "select";
@@ -108,7 +108,7 @@ function Input({
                     <div className="relative w-full">
                         <div
                             className={`text-[#9E9E9E] h-fit flex justify-between min-w-0 border rounded-xl 
-                        ${displayError ? 'border-red-500' : '[border-color:#9E9E9E]'} px-[14px] py-[16px] cursor-pointer`}
+                        '[border-color:#9E9E9E]'} px-[14px] py-[16px] cursor-pointer`}
                             onClick={() => setShowDropdown(!showDropdown)}
                         >
                             <div className="flex flex-wrap items-start gap-2">
@@ -191,14 +191,14 @@ function Input({
                                         width: "100%", height: "3.9em", boxSizing: "border-box"
                                     }}
                                     inputProps={{
-                                        name: field.name, required: true, autoFocus: true
+                                        name: field.name, required: true,
                                     }}
                                 /></div>
 
                         ) : (
 
                             <Field
-                                className={`text-[#9E9E9E] box-content h-[1.5em] block min-w-0 w-full border-1 rounded-xl [border-color:#9E9E9E] bg-[#fafafa] m-0 px-[14px] py-[16px] focus:[border-color:#fe7c25] 
+                                className={`text-[#9E9E9E] box-content h-[1.5em] block min-w-0 w-full border-1 rounded-xl border-gray-400 bg-[#fafafa] m-0 px-[14px] py-[16px] focus:border-shnp-orange
                                 placeholder:text-xs placeholder:md:text-sm placeholder:2xl:text-2xl` + displayError}
                                 id={id}
                                 {...field}

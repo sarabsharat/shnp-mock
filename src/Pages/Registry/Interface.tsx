@@ -84,13 +84,13 @@ export const initialValues: RestaurantRegistration = {
     operationRepresentativeEmailAddress: "",//ok
     operationRepresentativeFullNameEn: "",//ok
     operationRepresentativeFullNameAr: "",
-    foodCategories: [0],//ok
+    foodCategories: [],//ok
     managementPhoneNumber: "",//ok
     workingDetails: [],//ok
-    documentLicenseNumber: [""],//ok
-    documentTaxNumber: [""],//ok
-    documentRegistry: [""],//ok
-    documentContract: [""],//ok
+    documentLicenseNumber: [],//ok
+    documentTaxNumber: [],//ok
+    documentRegistry: [],//ok
+    documentContract: [],//ok
     mainBranchNameAr: "",//ok
     mainBranchNameEn: "",//ok
     branchAddressName: "",//pl
@@ -134,12 +134,14 @@ export const validationSchema = Yup.object().shape({
     foodCategories:Yup.array().min(1, 'Select at least one option'),
     managementPhoneNumber: Yup.number().required("Management phone number is required."),
     workingDetails: Yup.array().min(1,"You must provide at least one working shift detail.").required("Working details are required"),
-    documentLicenseNumber:Yup.array().required("Document license is required."),
-    documentTaxNumber: Yup.array().required("Document tax is required."),
-    documentRegistry: Yup.array().required("Document registry is required."),
+    documentContract: Yup.array().min(1, "Contract document is required"),
+    documentLicenseNumber: Yup.array().min(1, "License is required"),
+    documentTaxNumber: Yup.array().min(1, "Tax document is required"),
+    documentRegistry: Yup.array().min(1, "Registry document is required"),
     mainBranchNameAr: Yup.string().required("Please enter the main branch's name in Arabic"),
     mainBranchNameEn: Yup.string().required("Please enter the main branch's name in English"),
-    // imageUrl: "",
+    imageUrl:Yup.string().required("Image is required") ,
+    documents: Yup.array().min(4, "Please upload all the documents")
 })
 
 export const documentTypeMap = {

@@ -5,6 +5,7 @@ import Thankyou from "./Pages/Thankyou.tsx";
 import Registration from './Pages/Registry/Registration.tsx'
 import Chat from "./Components/Chat.tsx"
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {BrowserRouter,
         Route, Routes } from "react-router-dom";
 

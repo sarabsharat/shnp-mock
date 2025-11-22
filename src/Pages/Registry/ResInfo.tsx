@@ -27,10 +27,10 @@ function ResInfo() {
 
                 <div id="title" className="flex justify-start w-full h-fit text-left items-center gap-2">
                     <img className="2xl:w-19" alt="One" src={oneIcon}/>
-                    <p className="text-xl 2xl:text-4xl">{t("sec1_title")}</p>
+                    <p className="text-xl 2xl:text-3xl">{t("sec1_title")}</p>
                 </div>
 
-                <p className="text-sm pl-4 block text-left mb-2 h-fit 2xl:text-2xl">
+                <p className="text-sm pl-4 block text-left mb-2 h-fit 2xl:text-xl">
                     {t("sec1_desc")}
                 </p>
 
@@ -191,6 +191,7 @@ function ResInfo() {
                     </div>
 
                 </div>
+
             </div>
         </>
     )
