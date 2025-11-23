@@ -57,5 +57,12 @@
   "input26name": "Trademark",
   "input27name": "Commercial License Number",
   "input28name": "Tax Certificate Number",
-  "input29name": "Company Tax Registry Representative"
+  "input29name": "Company Tax Registry Representative",
+  "loginFormTitle": "Log into Restaurant Panel",
+  "loginFormDesc": "Please enter your restaurant email address to create an account or to log in",
+  "passFormTitle": "Reset Your Password",
+  "passFormDesc": "Enter your email please",
+  "cant_remember": "Can’t Remember Your Current Password?",
+  "reset_password": "Reset Password"
+
 }

@@ -6,7 +6,7 @@ import 'react-phone-input-2/lib/style.css'
 import type {InputType} from "../Pages/Registry/Interface.tsx";
 
 function Input({
-                   label, id, placeholder, type, name, ...rest
+                   label, id, placeholder, type, name,icon, ...rest
                }: InputType) {
     //formik
     const [field, meta] = useField(name);
@@ -30,6 +30,20 @@ function Input({
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"/>
         </svg>);
+
+    const human = (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        className="lucide lucide-user-icon lucide-user">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+    </svg>)
+
+    const lock= (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      className="lucide lucide-lock-icon lucide-lock">
+        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>)
 
     const hide = (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -198,8 +212,13 @@ function Input({
                         ) : (
 
                             <Field
-                                className={`text-[#9E9E9E] box-content h-[1.5em] block min-w-0 w-full border-1 rounded-xl border-gray-400 bg-[#fafafa] m-0 px-[14px] py-[16px] focus:border-shnp-orange
-                                placeholder:text-xs placeholder:md:text-sm placeholder:2xl:text-2xl` + displayError}
+                                className={`
+                        text-[#9E9E9E] box-content h-[1.5em] block min-w-0 w-full border rounded-xl bg-[#fafafa] m-0 py-[16px] 
+                        placeholder:text-xs placeholder:md:text-sm placeholder:2xl:text-2xl
+                        focus:outline-none focus:ring-0
+                        ${icon ? 'ps-10 pe-[14px]' : 'px-[14px]'}
+                        ${displayError}
+                    `}
                                 id={id}
                                 {...field}
                                 value={field.value as string || ''}
@@ -207,7 +226,9 @@ function Input({
                                 placeholder={placeholder}
                                 {...rest}/>)}
 
-
+                    {icon &&(<span className="absolute top-1/2 -translate-y-1/2
+  [inset-inline-start:0.55rem] [padding-inline-end:0.75rem]
+  text-[#9E9E9E] hover:text-shnp-orange">{icon==="human" ? human : lock}</span>)}
                         {isPasswordField && (<button
                                 type="button"
                                 onClick={toggleVisibility}
@@ -221,7 +242,7 @@ function Input({
                     </div>)}</label>
             {displayError && (<p
                     id={`${id}-error`}
-                    className="text-red-500 text-xs text-clip 2xl:text-sm mt-1 absolute left-0 top-full"
+                    className="text-red-500 text-xs text-clip  mt-1 absolute left-0 top-full 2xl:text-lg"
                 >
                     {Array.isArray(meta.error) ? meta.error.join(', ') : meta.error}
                 </p>)}

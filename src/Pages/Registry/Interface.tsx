@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import Login from "../Login.tsx";
 
 export interface WorkingDetailType {
     day: string;
@@ -14,8 +15,10 @@ export type InputType = {
     required?: boolean,
     name: string,
     value?: string,
+    icon?: string,
     options?: string[];
 }
+
 //upload page
 export type link = {
     id: string;
@@ -110,6 +113,32 @@ export const initialValues: RestaurantRegistration = {
     branchCountry:"",
 
 }
+
+export interface Login{
+    username:string;
+    password:string;
+}
+
+export const initialValuesLogin: Login = {
+    username:"",
+    password:""
+}
+export const validationSchemaLogin = Yup.object().shape({
+    username:Yup.string().required("Username is required"),
+    password:Yup.string().required("Password is required"),
+
+})
+
+export interface Mail{
+    email:string
+}
+export const validationSchemaMail = Yup.object().shape({
+    email: Yup.string().email("Invalid email!").required("Please Enter Your email")
+})
+export const initialValuesMail:Mail  = {
+   email:""
+}
+
 
 export const validationSchema = Yup.object().shape({
     nameAr: Yup.string().required("Your restaurant's name in Arabic is required"),

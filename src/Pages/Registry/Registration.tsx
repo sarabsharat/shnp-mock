@@ -10,16 +10,16 @@ import { useTranslation } from 'react-i18next';
 import { notifySuccess, notifyError, FormErrorListener } from "../../utilities/notify.ts"
 
 const Registration = () => {
-    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
     const handleLanguageToggle = () => {
         const newLang = i18n.language === 'en' ? 'ar' : 'en';
         i18n.changeLanguage(newLang);
     };
 
-    const onSubmit = async (values: any, formikHelpers: any) => {
+    const onSubmit = async (values: RestaurantRegistration, formikHelpers: any) => {
         try {
-            await handleSubmit(values);
+            await handleSubmit(values,formikHelpers);
             notifySuccess("You Successfully registered");
             navigate("/success");
         } catch (err: any) {
