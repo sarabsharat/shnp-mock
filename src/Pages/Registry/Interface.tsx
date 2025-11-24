@@ -146,7 +146,7 @@ export const validationSchema = Yup.object().shape({
     password: Yup.string().min(8).required("Password is required"),
     confirmPassword:Yup.string().oneOf([Yup.ref(`password`)], "Passwords must match!"),
     preferredLocale: Yup.string().required("Please Enter"),
-    operationRepresentativePhoneNumber: Yup.number().required("Please complete this field*"),
+    operationRepresentativePhoneNumber: Yup.number().required("Please complete this field"),
     email: Yup.string().email("Invalid email!").required("Please Enter Your email"),
     // instagramSocialMediaLink: Yup.string().url("Please enter a valid URL").required("Please enter your Instagram account's link"),
     // twitterSocialMediaLink: Yup.string().url("Please enter a valid URL").required("Please enter your Twitter(X) account's link"),

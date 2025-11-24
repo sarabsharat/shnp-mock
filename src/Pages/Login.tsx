@@ -5,7 +5,6 @@ import {initialValuesLogin, validationSchemaLogin} from "./Registry/Interface.ts
 import "../../media/logo.png";
 import {useTranslation} from "react-i18next";
 import { Link } from 'react-router-dom';
-import Pass from "./Pass.tsx"
 
 
 
@@ -37,7 +36,7 @@ function Login(){
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
             }}>
-                <Form className="flex flex-col gap-3 2xl:gap-y-10">
+                <Form className="flex flex-col gap-3 gap-y-5 2xl:gap-y-10">
         <Input label="" placeholder={"Username"} id={"1"} icon="human" name="username"></Input>
                 <Input label="" placeholder={"Password"} type="password" icon="lock" id={"1"} name="password"></Input>
 

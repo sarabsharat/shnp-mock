@@ -14,13 +14,13 @@ function Pass(){
         const newLang = i18n.language === 'en' ? 'ar' : 'en';
         i18n.changeLanguage(newLang);
     };
-    const logo=(<img className="mt-3" src="../../media/logo.png" width="160" alt="logo"></img>)
+    const logo=(<img className="mt-3 2xl:w-[320px]" src="../../media/logo.png" width="160" alt="logo"></img>)
 
     return(
-        <div className="flex flex-wrap flex-col gap-0 items-center justify-evenly h-screen
-        md:border-gray-400 md:border-1 md:border-spacing-20 md:rounded-2xl md:min-w-[450px]
-        2xl:border-2 2xl:border-gray-400
-        lg:border-gray-400 lg:border-1 lg:border-spacing-20 lg:p-4 lg:gap-y-2 lg:max-w-[450px]">
+        <div className="flex flex-nowrap flex-col gap-0 items-center justify-evenly  h-fit
+        md:border-gray-400 md:border-1 md:border-spacing-20 md:rounded-2xl
+        2xl:border-2 2xl:border-gray-400 2xl:max-w-[850px] 2xl:h-fit 2xl:justify-around
+        lg:border-gray-400 lg:border-1 lg:border-spacing-20 lg:p-4 lg:gap-y-2 lg:max-w-[450px] ">
             <div className="flex w-full justify-end ">
                 <button
                     type="button"
@@ -32,7 +32,7 @@ function Pass(){
 
             <div className="text-3xl flex  flex-col items-center">{logo}
                 {t(`passFormTitle`)}
-                <p className="text-sm p-5 md:pr-35 md:pl-35 lg:pr-12 lg:pl-12 ">
+                <p className="text-sm p-5 md:pr-35 md:pl-35 lg:pr-12 lg:pl-12 2xl:text-2xl">
                     {t(`passFormDesc`)}</p>
             </div>
             <Formik initialValues={initialValuesMail} validationSchema={validationSchemaMail} onSubmit={(values, { setSubmitting }) => {
@@ -40,11 +40,11 @@ function Pass(){
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
             }}>
-                <Form className="flex flex-col gap-3 gap-y-5">
+                <Form className="flex flex-col w-full p-3 gap-3 gap-y-5">
         <Input label="" placeholder={"Username"} id={"1"} icon="human" type="email" name="email"></Input>
 
                 <button type="submit" className="rounded-3xl bg-shnp-orange w-auto m-0 grow p-2 text-white mb-2
-                                    2xl:p-6 2xl:rounded-4xl 2xl:text-2xl ">Send Email</button>
+                                    2xl:p-6 2xl:rounded-4xl 2xl:text-2xl ">{t(`email_btn`)}</button>
                 </Form>
 
             </Formik>
