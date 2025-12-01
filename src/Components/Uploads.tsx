@@ -54,7 +54,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
     const [workingForm, setWorkingDetail] = useState<WorkingDetailType>({day: "", from: "",to: "" });
     const [previewSrc, setPreviewSrc] = useState<string | null>(null);
     const [pendingDocument, setPendingDocument] = useState<{ name: string; url: string } | null>(null);
-    const {setFieldValue, values,submitCount} = useFormikContext<RestaurantRegistration>();
+    const {setFieldValue, values} = useFormikContext<RestaurantRegistration>();
     // const displayError = (meta.touched || submitCount > 0) && meta.error;
     const displayError = meta.error;
 
@@ -97,7 +97,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
             }
 
             if (name === "imageUrl" || name === "imageURL") {
-                setFieldValue(name, finalUrl);
+                await setFieldValue(name, finalUrl);
                 setPendingDocument(null);
                 setActiveModalId(null);
                 return;
@@ -107,9 +107,12 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                 ? (values[name as keyof RestaurantRegistration] as string[])
                 : [];
             const cleanFieldArray = currentFieldArray.filter(url => url && url !== "");
-            setFieldValue(name, [...cleanFieldArray, finalUrl]);
+            await setFieldValue(name, [...cleanFieldArray, finalUrl]);
 
-            const backendTypeCode = documentTypeMap[name] || name;
+            type DocumentTypeKey = keyof typeof documentTypeMap;
+
+            const backendTypeCode =
+                documentTypeMap[name as DocumentTypeKey] || name;
 
             const currentDocuments = values.documents || [];
 
@@ -137,11 +140,11 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                 ];
             }
 
-            setFieldValue("documents", newDocumentsList);
+            await setFieldValue("documents", newDocumentsList);
             setPendingDocument(null);
             setActiveModalId(null);
 
-        } catch (err: any) {
+        } catch (err:unknown) {
             console.error("Upload Flow Error:", err);
             alert("Failed to upload image.");
         }
@@ -151,7 +154,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
 
     //endregion
 
-    //region Workingwhifts
+    //region Workingshifts
     const handleWorkingChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
         index?: number,
@@ -163,6 +166,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
             const updatedShifts = [...workingShifts];
             updatedShifts[index] = {...updatedShifts[index], [fieldName]: value};
             setWorkingShifts(updatedShifts);
+            // noinspection JSIgnoredPromiseFromCall
             setFieldValue(name, updatedShifts);
         } else {
             const {name: inputName} = e.target;
@@ -179,19 +183,13 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
         if (setWorkingShifts) {
             setWorkingShifts(updatedShifts);
         }
-
+        // noinspection JSIgnoredPromiseFromCall
         setFieldValue(name, updatedShifts);
         setWorkingDetail({day: "", from: "", to: ""});
         setActiveModalId(null);
     }
     //endregion
 
-    console.log(`Field: ${name}`, {
-        touched: meta.touched,
-        submitCount: submitCount,
-        error: meta.error,
-        value: meta.value
-    });
 
     return (
         <>
@@ -269,11 +267,15 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                     </div>
 
                     <label htmlFor={id}>
-                        <div className="flex justify-items-start">
+                        <div className="flex gap-2 justify-items-start">
                             <button type="button" onClick={() => setActiveModalId('imageUpload')}
                                     className="p-2 w-1/4 2xl:w-1/2 2xl:h-50 h-full border-dashed border-[#E0E0E0] bg-[#eeeeee] flex justify-evenly border-2 rounded-2xl md:p-6 hover:cursor-pointer">
                                 {uploadIcon}
                             </button>
+                            {previewSrc && (
+                                <img alt="Upload Preview" src={previewSrc}
+                                     className='p-2 w-1/4 2xl:w-1/2 2xl:h-50 h-full border-dashed border-[#E0E0E0] bg-[#eeeeee] flex  justify-evenly border-2 rounded-2xl md:p-6 border border-gray-200 rounded-lg self-start h-[10em] w-auto max-w-[150px]'/>
+                            )}
                         </div>
                     </label>
                     { displayError && (

@@ -1,55 +1,101 @@
 import "../App.css"
 import Input from "../Components/Input";
 import { Form, Formik } from "formik";
-import {initialValuesLogin, validationSchemaLogin} from "./Registry/Interface.tsx";
+import { initialValuesLogin, type ResLogin, validationSchemaLogin } from "./Registry/Interface.tsx";
 import "../../media/logo.png";
-import {useTranslation} from "react-i18next";
-import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { loginUser } from "../features/user/userThunk.tsx";
+import { notifyError, notifySuccess } from "../utilities/notify.ts";
 
-
-
-function Login(){
+function Login() {
     const { t, i18n } = useTranslation();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/dashboard", { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
+
     const handleLanguageToggle = () => {
         const newLang = i18n.language === 'en' ? 'ar' : 'en';
         i18n.changeLanguage(newLang);
     };
-    const logo=(<img className="mt-3 2xl:w-[320px]" src="../../media/logo.png" width="160" alt="logo"></img>)
 
-    return(
-        <div className="flex flex-nowrap flex-col gap-0 items-center justify-evenly  h-fit
-        md:border-gray-400 md:border-1 md:border-spacing-20 md:rounded-2xl
-        2xl:border-2 2xl:border-gray-400 2xl:max-w-[850px] 2xl:h-fit 2xl:justify-around
-        lg:border-gray-400 lg:border-1 lg:border-spacing-20 lg:p-4 lg:gap-y-2 lg:max-w-[450px] ">
-            <div className="flex w-full justify-end ">
-            <button
-                type="button"
-                onClick={handleLanguageToggle}
-                className="text-shnp-orange  hover:bg-[#FFE0C8FF] p-5 md:p-10   rounded-full mb-1 2xl:text-4xl"
+    const onSubmit = async (values: ResLogin, formikHelpers: any) => {
+        try {
+            await dispatch(loginUser(values)).unwrap();
+            notifySuccess("You Successfully Logged In");
+        } catch (err: any) {
+            if (err.response?.data?.ERR_NETWORK) {
+                notifyError("Network error");
+            } else if (err.response?.data?.RESTAURANT_NOT_APPROVED) {
+                notifyError("Your restaurant isn't approved yet");
+            } else if (err.response?.data?.INVALID_CREDENTIALS) {
+                notifyError("Username or password incorrect");
+            } else if (err.response?.data?.message) {
+                notifyError(err.response.data.message);
+            } else {
+                notifyError("Unknown error occurred.");
+            }
+        } finally {
+            formikHelpers.setSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="flex flex-nowrap flex-col gap-0 items-center justify-evenly h-fit
+            md:border-gray-400 md:border-1 md:rounded-2xl
+            2xl:border-2 2xl:max-w-[850px] 2xl:justify-around
+            lg:border-gray-400 lg:border-1 lg:p-4 lg:max-w-[450px]">
+
+            <div className="flex w-full justify-end">
+                <button
+                    type="button"
+                    onClick={handleLanguageToggle}
+                    className="text-shnp-orange hover:bg-[#FFE0C8FF] p-3 md:p-5 rounded-full mb-1 2xl:text-4xl"
+                >
+                    {i18n.language === 'en' ? 'العربية' : 'English'}
+                </button>
+            </div>
+
+            <div className="text-3xl flex flex-col items-center 2xl:text-6xl">
+                <img className="mt-3 2xl:w-[320px]" src="../../media/logo.png" width="160" alt="logo" />
+                {t(`loginFormTitle`)}
+                <p className="text-sm p-5 lg:pr-12 lg:pl-12 2xl:text-2xl">{t(`loginFormDesc`)}</p>
+            </div>
+
+            <Formik
+                initialValues={initialValuesLogin}
+                validationSchema={validationSchemaLogin(t)}
+                onSubmit={onSubmit}
             >
-                {i18n.language === 'en' ? 'العربية' : 'English'}
-            </button></div>
-            <div className="text-3xl flex  flex-col items-center 2xl:text-6xl">{logo}{t(`loginFormTitle`)}
-            <p className="text-sm p-5 md:pr-35 md:pl-35 lg:pr-12 lg:pl-12 2xl:text-2xl">{t(`loginFormDesc`)}</p></div>
-            <Formik initialValues={initialValuesLogin} validationSchema={validationSchemaLogin} onSubmit={(values, { setSubmitting }) => {
-                console.log("Submitting:", values);
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-            }}>
-                <Form className="flex flex-col gap-3 gap-y-5 2xl:gap-y-10">
-        <Input label="" placeholder={"Username"} id={"1"} icon="human" name="username"></Input>
-                <Input label="" placeholder={"Password"} type="password" icon="lock" id={"1"} name="password"></Input>
+                <Form className="flex flex-col gap-3 gap-y-6 2xl:gap-y-10">
+                    <Input placeholder="Username" id={"1"} icon="human" name="username" label=""/>
+                    <Input placeholder="Password" type="password" id={"2"} icon="lock" name="password" label="" />
 
+                    <p className="text-sm p-5 lg:pr-12 lg:pl-12 2xl:text-2xl">
+                        {t(`cant_remember`)}{" "}
+                        <span className="underline text-shnp-orange">
+                            <Link to="/resetPassword">{t(`reset_password`)}</Link>
+                        </span>
+                    </p>
 
-                    <p className="text-sm p-5 md:pr-35 md:pl-35 lg:pr-12 lg:pl-12 2xl:text-2xl">
-                        {t(`cant_remember`)}<span className="underline text-shnp-orange"><Link to={"/resetPassword"}>{t(`reset_password`)}</Link></span></p>
-                <button type="submit" className="rounded-3xl bg-shnp-orange w-auto m-0 grow p-2 text-white mb-2
-                                    2xl:p-6 2xl:rounded-4xl 2xl:text-2xl ">Join Mealivry</button>
+                    <button
+                        type="submit"
+                        className="rounded-3xl bg-shnp-orange p-2 text-white mb-2
+                        2xl:p-6 2xl:text-2xl"
+                    >
+                        Join Mealivry
+                    </button>
                 </Form>
             </Formik>
-
-    </div>
-
+        </div>
     );
 }
 

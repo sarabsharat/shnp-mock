@@ -1,7 +1,7 @@
 import axios from "axios";
-import type { RestaurantRegistration } from "./Pages/Registry/Interface.tsx";
-const BASE_URL = "https://app-stg.shnp.me/api/";
-
+import type {RestaurantRegistration, ResLogin, PassReset} from "./Pages/Registry/Interface.tsx";
+export const BASE_URL = "https://app-stg.shnp.me/api/";
+import {useState} from "react";
 
 
 export interface ServerUploadResponse {
@@ -27,25 +27,68 @@ export default async function imageUpload(pendingDocument: { name: string; url: 
         throw err;
     }
 }
+//restaurantemployees/login
 
 export const handleSubmit = async (values: RestaurantRegistration, { setSubmitting }: any) => {
     try {
-
         console.log("Submitting Registration Payload:", values);
         const response = await axios.post(`${BASE_URL}Restaurants`, values);
-
         console.log("Registration Success:", response.data);
     } catch (err: any) {
         console.error("Registration Failed:", err);
 
         if (err.response) {
             console.error("Server Error Data:", err.response.data);
-        } else if (err.request) {
-            alert("Network Error: Could not reach the server.");
-        } else {
-            alert(`Error: ${err.message}`);
         }
+        throw err;
     } finally {
         setSubmitting(false);
     }
 };
+// export const handleLogin = async (values: ResLogin, { setSubmitting }: any) => {
+//     try {
+//         console.log("Submitting Registration Payload:", values);
+//         const response = await axios.post(`${BASE_URL}restaurantemployees/login`, values);
+//         console.log("Registration Success:", response.data);
+//         return response.data;
+//     } catch (err: any) {
+//         console.error("Registration Failed:", err);
+//
+//         if (err.response) {
+//             console.error("Server Error Data:", err.response.data);
+//         }
+//         throw err;
+//     } finally {
+//         setSubmitting(false);
+//     }
+// };
+
+
+//auth
+
+//reset restaurantemployees/resetPassword
+
+export const handlePass = async (values: PassReset, { setSubmitting }: any) => {
+    try {
+        console.log("Submitting Pass reset Payload:", values);
+        const response = await axios.post(`${BASE_URL}restaurantemployees/resetPassword`, values);
+        console.log("Pass reset sent:", response.data);
+    } catch (err: any) {
+        console.error("Reset Failed:", err);
+
+        if (err.response) {
+            console.error("Server Error Data:", err.response.data);
+        }
+        throw err;
+    } finally {
+        setSubmitting(false);
+    }
+};
+
+
+
+// const getApi = async () => {
+//     const [getData, setGetData] =  useState ([])
+//     const response = await axios.get(`${BASE_URL}dashboard/restaurantCounts`);
+//     setGetData(response.data)
+// }

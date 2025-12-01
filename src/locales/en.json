@@ -74,7 +74,7 @@
   "val_pass1": "Password is required",
   "val_pass2": "Passwords must match!",
   "complete_field": "Please complete this field",
-  "val_email1": "Please Enter Your email",
+  "val_email1": "Please Enter email",
   "val_email2": "Invalid email!",
   "val_iban1": "Please enter your restaurant's IBAN",
   "val_iban2": "The IBAN account field contains \"SA\" followed by 22 characters",
@@ -91,5 +91,6 @@
   "val_mainar": "Please enter the main branch's name in Arabic",
   "val_mainen": "Please enter the main branch's name in English",
   "val_trademark": "Image is required",
-  "val_docs": "Please upload all the documents"
+  "val_docs": "Please upload all the documents",
+  "val_user": "Username is required"
 }

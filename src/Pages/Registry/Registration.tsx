@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { validationSchema, initialValues, type RestaurantRegistration } from "./Interface.tsx";
 import "../../i18next.ts"
 import { useTranslation } from 'react-i18next';
-import { notifySuccess, notifyError, FormErrorListener } from "../../utilities/notify.ts"
+import { notifySuccess, notifyError} from "../../utilities/notify.ts"
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -16,23 +16,24 @@ const Registration = () => {
         const newLang = i18n.language === 'en' ? 'ar' : 'en';
         i18n.changeLanguage(newLang);
     };
-
-    const onSubmit = async (values: RestaurantRegistration, formikHelpers: any) => {
+//username is same as operation rep email
+    const onSubmit = async (values: RestaurantRegistration,formikHelpers: any) => {
         try {
             await handleSubmit(values,formikHelpers);
             notifySuccess("You Successfully registered");
             navigate("/success");
         } catch (err: any) {
-            if (err.response?.data?.errors) {
-                const backError = err.response.data.errors;
-                Object.entries(backError).forEach(([field, message]) => {
-                    formikHelpers.setFieldError(field, message as string);
-                })
-                notifyError("Please fix the errors");
+
+            if (err.code === "ERR_NETWORK") {
+                notifyError("Network could not reach the server");
+
+            } else if(err.response?.data?.RESTAURANT_EXISTS){
+                notifyError("A restaurant with the same credentials exists");
+
             } else if (err.response?.data?.message) {
                 notifyError(err.response.data.message);
             } else {
-                notifyError("Network or unknown error occurred.");
+                notifyError("Unknown error occurred.");
             }
         } finally {
             formikHelpers.setSubmitting(false);
@@ -43,13 +44,13 @@ const Registration = () => {
 
         <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            validationSchema={validationSchema(t)}
             onSubmit={onSubmit}
         >
 
             {({ isSubmitting }) => (
                 <>
-                    <FormErrorListener />
+
 
                     <div className="flex flex-wrap flex-col">
                         <div className="flex flex-col content-between">

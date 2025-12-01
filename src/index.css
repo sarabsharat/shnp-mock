@@ -19,6 +19,7 @@
 }
 @theme {
     --color-shnp-orange:#fe7c25;
+    --color-shnp-orange-light:#FFE0C8FF;
 }
 @font-face {
     font-family: "Yaro";
@@ -61,7 +62,6 @@ a {
   font-weight: 500;
   color: #fe7c25;
   text-decoration: none;
-
 }
 a:hover {
   color: #fe7c25;

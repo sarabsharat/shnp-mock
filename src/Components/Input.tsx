@@ -32,14 +32,14 @@ function Input({
         </svg>);
 
     const human = (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                         className="lucide lucide-user-icon lucide-user">
         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
         <circle cx="12" cy="7" r="4"/>
     </svg>)
 
     const lock= (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                       className="lucide lucide-lock-icon lucide-lock">
         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -242,7 +242,7 @@ function Input({
                     </div>)}</label>
             {displayError && (<p
                     id={`${id}-error`}
-                    className="text-red-500 text-xs text-clip  mt-1 absolute left-0 top-full 2xl:text-lg"
+                    className="text-red-500 text-xs text-clip [inset-inline-start:0.55rem] [padding-inline-end:0.75rem] mt-1 absolute left-0 top-full 2xl:text-lg"
                 >
                     {Array.isArray(meta.error) ? meta.error.join(', ') : meta.error}
                 </p>)}

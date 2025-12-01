@@ -1,16 +1,11 @@
 import "../App.css";
-import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../media/logo.png";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 
 export default function Thankyou(){
-    const showToastMessage = () => {
-        toast.success("Success Notification !", {
-            position: "top-right"
-        });
-    };
+
 
     const { t, i18n } = useTranslation();
     const handleLanguageToggle = () => {
@@ -20,7 +15,7 @@ export default function Thankyou(){
     const logo=(<img className="mt-3 2xl:w-[320px]" src="../../media/logo.png" width="160" alt="logo"></img>)
 
     return(
-      <div onLoad={showToastMessage}><div className="flex flex-nowrap flex-col gap-0 items-center justify-evenly  h-fit
+      <div><div className="flex flex-nowrap flex-col gap-0 items-center justify-evenly  h-fit
         md:border-gray-400 md:border-1 md:border-spacing-20 md:rounded-2xl
         2xl:border-2 2xl:border-gray-400 2xl:max-w-[850px] 2xl:h-fit 2xl:justify-around
         lg:border-gray-400 lg:border-1 lg:border-spacing-20 lg:p-4 lg:gap-y-2 lg:max-w-[450px] ">
@@ -28,7 +23,7 @@ export default function Thankyou(){
               <button
                   type="button"
                   onClick={handleLanguageToggle}
-                  className="text-shnp-orange  hover:bg-[#FFE0C8FF] p-5 md:p-10  rounded-full mb-1 2xl:text-4xl"
+                  className="text-shnp-orange  hover:bg-[#FFE0C8FF] p-3 md:p-5   rounded-full mb-1 2xl:text-4xl"
               >
                   {i18n.language === 'en' ? 'العربية' : 'English'}
               </button></div>

@@ -1,10 +1,17 @@
 import "../App.css"
 import Input from "../Components/Input";
 import { Form, Formik } from "formik";
-import {initialValuesMail, validationSchemaMail} from "./Registry/Interface.tsx";
+import {
+    initialValuesPassReset,
+    type PassReset,
+    validationSchemaPassReset,
+} from "./Registry/Interface.tsx";
 import "../../media/logo.png";
 import {useTranslation} from "react-i18next";
-
+import {handlePass} from "../server.tsx";
+//import Modal from "../Components/Modal.tsx";
+import {notifyError, notifySuccess} from "../utilities/notify.ts";
+import {Link} from "react-router-dom";
 
 
 function Pass(){
@@ -13,6 +20,29 @@ function Pass(){
     const handleLanguageToggle = () => {
         const newLang = i18n.language === 'en' ? 'ar' : 'en';
         i18n.changeLanguage(newLang);
+    };
+
+    const onSubmit = async (values: PassReset,formikHelpers: any) => {
+        try {
+            await handlePass(values,formikHelpers);
+            notifySuccess("We sent you an email to reset your password");
+              //  return (<Modal onClose={onclose} text="Password Reset"></Modal>)
+        } catch (err:any) {
+
+            if (err.code === "ERR_NETWORK") {
+                notifyError("Network could not reach the server");
+
+            } else if(err.response?.data?.RESTAURANT_EMPLOYEE_NOTFOUND){
+                notifyError("The restaurant employee not found.");
+
+            } else if (err.response?.data?.message) {
+                notifyError(err.response.data.message);
+            } else {
+                notifyError("Unknown error occurred.");
+            }
+        } finally {
+            formikHelpers.setSubmitting(false);
+        }
     };
     const logo=(<img className="mt-3 2xl:w-[320px]" src="../../media/logo.png" width="160" alt="logo"></img>)
 
@@ -35,20 +65,19 @@ function Pass(){
                 <p className="text-sm p-5 md:pr-35 md:pl-35 lg:pr-12 lg:pl-12 2xl:text-2xl">
                     {t(`passFormDesc`)}</p>
             </div>
-            <Formik initialValues={initialValuesMail} validationSchema={validationSchemaMail} onSubmit={(values, { setSubmitting }) => {
-                console.log("Submitting:", values);
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-            }}>
+            <Formik initialValues={initialValuesPassReset}
+                    validationSchema={validationSchemaPassReset(t)}
+                    onSubmit={onSubmit}>
                 <Form className="flex flex-col w-full p-3 gap-3 gap-y-5">
-        <Input label="" placeholder={"Username"} id={"1"} icon="human" type="email" name="email"></Input>
+        <Input label="" placeholder={"Username"} id={"1"} icon="human" name="userName"></Input>
+                    <p className="text-sm p-5 md:pr-35 md:pl-35 lg:pr-12 lg:pl-12 2xl:text-2xl">
+                        {t(`cant_remember`)}<span className="underline text-shnp-orange"><Link to={"/"}>Back to log in</Link></span></p>
 
                 <button type="submit" className="rounded-3xl bg-shnp-orange w-auto m-0 grow p-2 text-white mb-2
                                     2xl:p-6 2xl:rounded-4xl 2xl:text-2xl ">{t(`email_btn`)}</button>
                 </Form>
 
             </Formik>
-
     </div>
 
     );

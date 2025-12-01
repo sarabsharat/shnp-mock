@@ -24,4 +24,6 @@ i18next.on('languageChanged', (lng) => {
     document.documentElement.classList.toggle("rtl", lng === "ar");
 });
 
+
+
 export default i18next;

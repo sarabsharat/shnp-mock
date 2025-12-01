@@ -1,5 +1,6 @@
 import * as Yup from "yup";
-import Login from "../Login.tsx";
+import type { TFunction } from "i18next";
+import type {ReactNode} from "react";
 
 export interface WorkingDetailType {
     day: string;
@@ -27,6 +28,12 @@ export type link = {
     download?: boolean;
     name:string;
     options?: string[];
+}
+export interface Document {
+    urls: string[];
+    documentTypeCode: string;
+    driverId: number;
+    documentType: string;
 }
 //main
 export interface RestaurantRegistration {
@@ -66,13 +73,14 @@ export interface RestaurantRegistration {
     branchCity: string;
     imageUrl: string;
     branchCountry: string;
+    id?: number;
+    numberOfBranches?: number | null;
+    restaurantStatus?: string;
+    deliveryFees?: number;
+    mainMenuId?: number;
+    restaurantDocuments?: Document[];
 }
-export interface Document {
-    urls: string[];
-    documentTypeCode: string;
-    driverId: number;
-    documentType: string;
-}
+
 
 export const initialValues: RestaurantRegistration = {
     nameAr: "", //ok
@@ -111,67 +119,84 @@ export const initialValues: RestaurantRegistration = {
     branchMobile:"",
     branchCity:"",
     branchCountry:"",
+    id: 0,
+    numberOfBranches: null,
+    restaurantStatus: "",
+    deliveryFees: 0,
+    mainMenuId: 0,
+    restaurantDocuments: [],
+
 
 }
 
-export interface Login{
+export interface ResLogin{
     username:string;
     password:string;
 }
 
-export const initialValuesLogin: Login = {
+export const initialValuesLogin: ResLogin = {
     username:"",
     password:""
 }
-export const validationSchemaLogin = Yup.object().shape({
-    username:Yup.string().required("Username is required"),
-    password:Yup.string().required("Password is required"),
 
-})
+export const validationSchemaLogin =(t:TFunction) =>{
+    return Yup.object().shape({
+        username:Yup.string().required(t("val_user")),
+        password:Yup.string().required(t("input5placeholder")),
 
-export interface Mail{
-    email:string
+    })
 }
-export const validationSchemaMail = Yup.object().shape({
-    email: Yup.string().email("Invalid email!").required("Please Enter Your email")
-})
-export const initialValuesMail:Mail  = {
-   email:""
+export interface PassReset{
+    userName:string;
+}
+export const initialValuesPassReset: PassReset = {
+    userName:"",
+}
+export const validationSchemaPassReset =(t:TFunction) => {
+    return Yup.object().shape({
+        userName: Yup.string().required(t("val_email1"))
+    })
 }
 
+//t("val_namear")
 
-export const validationSchema = Yup.object().shape({
-    nameAr: Yup.string().required("Your restaurant's name in Arabic is required"),
-    nameEn: Yup.string().required("Your restaurant's name in English is required"),
-    password: Yup.string().min(8).required("Password is required"),
-    confirmPassword:Yup.string().oneOf([Yup.ref(`password`)], "Passwords must match!"),
+export const validationSchema = (t: TFunction) => {
+    return Yup.object().shape({
+    nameAr: Yup.string().required(t("val_namear")),
+    nameEn: Yup.string().required(t("val_nameen")),
+    password: Yup.string().min(8).matches(/[a-z]/,"password must include at least one lower case letter")
+        .matches(/[A-Z]/,"password must include at least one upper case letter")
+        .matches(/[\W_]/,"password must include at least one symbol")
+        .required(t("val_pass1")),
+    confirmPassword:Yup.string().oneOf([Yup.ref(`password`)], t("val_pass2")),
     preferredLocale: Yup.string().required("Please Enter"),
-    operationRepresentativePhoneNumber: Yup.number().required("Please complete this field"),
-    email: Yup.string().email("Invalid email!").required("Please Enter Your email"),
+    operationRepresentativePhoneNumber: Yup.number().required(t("complete_field")),
+    email: Yup.string().email(t("val_email2")).required(t("val_email1")),
     // instagramSocialMediaLink: Yup.string().url("Please enter a valid URL").required("Please enter your Instagram account's link"),
     // twitterSocialMediaLink: Yup.string().url("Please enter a valid URL").required("Please enter your Twitter(X) account's link"),
     //mainRestaurantBranchMapsLink: Yup.string().url("Please enter a valid URL").required("Please enter your restaurant's location"),
-    bankAccountIban: Yup.string().required("Please enter your restaurant's IBAN").transform(value=> value? value.replace(/\s/g,''):value)
+    bankAccountIban: Yup.string().required(t("val_iban1")).transform(value=> value? value.replace(/\s/g,''):value)
         .matches(
             /^SA\d{22}$/,
-            "The IBAN account field contains \"SA\" followed by 22 characters*\n"
-        ).length(24,"IBAN must be exactly 24 characters long."),
-    registrationNumber: Yup.number().required("Registration Number is required"),
-    operationRepresentativeEmailAddress: Yup.string().email("Invalid email!").required("Please Enter the operation representative email"),
-    operationRepresentativeFullNameEn: Yup.string().required("Please complete this field"),
-    operationRepresentativeFullNameAr: Yup.string().required("Please complete this field*"),
-    foodCategories:Yup.array().min(1, 'Select at least one option'),
-    managementPhoneNumber: Yup.number().required("Management phone number is required."),
-    workingDetails: Yup.array().min(1,"You must provide at least one working shift detail.").required("Working details are required"),
-    documentContract: Yup.array().min(1, "Contract document is required"),
-    documentLicenseNumber: Yup.array().min(1, "License is required"),
-    documentTaxNumber: Yup.array().min(1, "Tax document is required"),
-    documentRegistry: Yup.array().min(1, "Registry document is required"),
-    mainBranchNameAr: Yup.string().required("Please enter the main branch's name in Arabic"),
-    mainBranchNameEn: Yup.string().required("Please enter the main branch's name in English"),
-    imageUrl:Yup.string().required("Image is required") ,
-    documents: Yup.array().min(4, "Please upload all the documents")
+            t("val_iban2")
+        ).length(24,t("val_iban3")),
+    registrationNumber: Yup.number().required(t("val_regnum")),
+    operationRepresentativeEmailAddress: Yup.string().email(t("val_email2")).required(t("val_email1")),
+    operationRepresentativeFullNameEn: Yup.string().required(t("complete_field")),
+    operationRepresentativeFullNameAr: Yup.string().required(t("complete_field")),
+    foodCategories:Yup.array().min(1, t("val_category")),
+    managementPhoneNumber: Yup.number().required(t("val_mgmnum")),
+    workingDetails: Yup.array().min(1,t("val_work1")).required(t("val_work2")),
+    documentContract: Yup.array().min(1, t("val_contract")),
+    documentLicenseNumber: Yup.array().min(1, t("val_license")),
+    documentTaxNumber: Yup.array().min(1, t("val_tax")),
+    documentRegistry: Yup.array().min(1, t("val_reg")),
+    mainBranchNameAr: Yup.string().required(t("val_mainar")),
+    mainBranchNameEn: Yup.string().required(t("val_mainen")),
+    imageUrl:Yup.string().required(t("val_trademark")) ,
+    documents: Yup.array().min(4, t("val_docs"))
 })
+    }
 
 export const documentTypeMap = {
     documentRegistry: "CompanyTaxRegistryRepresentative",
@@ -179,5 +204,15 @@ export const documentTypeMap = {
     documentLicenseNumber: "CommercialLicenseNumber",
     documentContract: "RestaurantContract",
 };
+
+export interface AuthContextType {
+    token: string | null;
+    refreshToken: string | null;
+    login: (jwt: string, refreshToken: string) => void;
+    logout: () => void;
+}
+export interface AuthProviderProps {
+    children: ReactNode;
+}
 
 
