@@ -8,8 +8,9 @@
     width: 100%;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 1rem;
   background-color: #242424;
-    overflow: scroll;
+    overflow: clip;
     scrollbar-color: #fe7c25 transparent;
     scrollbar-width: auto;
   font-synthesis: none;
@@ -17,28 +18,53 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+html, body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    max-width: 100%;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#different{
+    font-family: "Times New Roman" !important;
+}
+
+
+
 @theme {
     --color-shnp-orange:#fe7c25;
     --color-shnp-orange-light:#FFE0C8FF;
 }
+.custom-font-times {
+    font-family: "Arial Black" !important;
+}
+.custom-font-reg {
+    font-family: "Arial" !important;
+}
 @font-face {
     font-family: "Yaro";
-    src: local("Yaro"), url("./fonts/Yaro.woff") format("woff");
+    src: local("Yaro"), url("Fonts/Yaro.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family:"DINar";
-    src: local("DINar"), url("./fonts/DINar.woff") format("woff");
+    src: local("DINar"), url("Fonts/DINar.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 :lang(en){
-    font-family: Yaro, sans-serif;
+    font-family: Yaro, sans-serif,Serif,monospace;
 }
 :lang(ar){
-    font-family:DINar,cairo, sans-serif;
+    font-family:DINar,cairo, sans-serif,monospace;
 }
 
 *:focus {
@@ -57,6 +83,16 @@
     width: 100%;
     border-radius: 10px !important;
 }
+.separator-divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 60%;
+    background-color: #e5e7eb;
+}
 
 a {
   font-weight: 500;
@@ -70,9 +106,13 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+    align-items: center;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  min-width: fit-content;
+    min-height: fit-content;
+    max-width: 2560px;
+    max-height:1740px ;
+
 }
 
 h1 {

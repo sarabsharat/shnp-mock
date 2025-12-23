@@ -2,11 +2,12 @@ import '../App.css';
 import {useState} from 'react';
 import * as React from "react";
 import Modal from './Modal.tsx';
-import type {link, WorkingDetailType} from "../Pages/Registry/Interface.tsx";
+import type {link, WorkingDetailType} from "../Models/RegistrationFormInterface.ts";
 import {useField, useFormikContext} from "formik";
-import imageUpload from "../server.tsx";
-import type {RestaurantRegistration} from "../Pages/Registry/Interface.tsx";
-import {documentTypeMap} from "../Pages/Registry/Interface.tsx";
+import {imageUpload} from "../utilities/ImageUpload/imageUpload.ts";
+import type {RestaurantRegistration} from "../Models/RegistrationFormInterface.ts";
+import {documentTypeMap} from "../Models/RegistrationFormInterface.ts";
+import {notifyError} from "../utilities/Notify.ts";
 
 type UploadsProps = link & {
     workingShifts?: WorkingDetailType[];
@@ -92,7 +93,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
             const finalUrl = uploaded.location || uploaded.url || uploaded.path;
 
             if (!finalUrl) {
-                alert("Upload successful, but could not retrieve image URL.");
+                notifyError("Upload successful, but could not retrieve image URL.")
                 return;
             }
 
@@ -146,7 +147,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
 
         } catch (err:unknown) {
             console.error("Upload Flow Error:", err);
-            alert("Failed to upload image.");
+            notifyError("Failed to upload image.")
         }
     };
 
@@ -274,7 +275,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                             </button>
                             {previewSrc && (
                                 <img alt="Upload Preview" src={previewSrc}
-                                     className='p-2 w-1/4 2xl:w-1/2 2xl:h-50 h-full border-dashed border-[#E0E0E0] bg-[#eeeeee] flex  justify-evenly border-2 rounded-2xl md:p-6 border border-gray-200 rounded-lg self-start h-[10em] w-auto max-w-[150px]'/>
+                                     className='p-2 w-1/4 2xl:w-1/2 2xl:h-50 border-dashed  bg-[#eeeeee] flex  justify-evenly md:p-6 border border-gray-200 rounded-lg self-start h-[10em] max-w-[150px]'/>
                             )}
                         </div>
                     </label>
@@ -294,7 +295,7 @@ function Uploads({id, title, type, download, name, workingShifts, setWorkingShif
                     <div className="flex flex-col flex-wrap w-[100%] flex-grow">
                         <label htmlFor={id}>{title}
                             <div
-                                className="p-2 w-full 2xl:w-1/2 2xl:h-50 h-full border-dashed border-[#E0E0E0] bg-[#eeeeee] flex justify-evenly border-2 rounded-2xl md:p-6 hover:cursor-pointer">
+                                className="p-2 w-full 2xl:w-1/2 2xl:h-50 h-full border-dashed border-[#E0E0E0] bg-gray-100 flex justify-evenly border-2 rounded-2xl md:p-6 hover:cursor-pointer">
                                 {uploadIcon}
                                 <input name={name} id={id} type="file" className="hidden"
                                        onChange={uploadImage} accept="image/*"/>

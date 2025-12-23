@@ -1,9 +1,10 @@
-#root {
-  max-width: 4000px;
-  margin: 0 auto;
-    height: fit-content;
-  padding: 2rem;
-  text-align: center;
+html, body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    width: 100%;
 }
 
-
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
