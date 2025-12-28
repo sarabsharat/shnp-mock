@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
-import { useSelector} from "react-redux";
-import type { RootState} from "../Store";
+import React from "react";
 import "../App.css";
-import { fetchRestaurantEmployees } from "../Redux/Navbar/NavbarThunk.tsx";
-import "../i18next.ts"
+import "../i18next.ts";
 import { useTranslation } from 'react-i18next';
-import { useNavigate} from 'react-router-dom';
-import {useAppDispatch,useAppSelector} from "../Store/hooks.tsx";
-import {setView} from "../Redux/Homepage/NavigationSlice.tsx";
+import { useAppDispatch, useAppSelector } from "../Store/hooks.tsx";
+import { setView } from "../Redux/Homepage/NavigationSlice.tsx";
+import type { RootState } from "../Store";
+import { useGetEmployeeAccountQuery } from "../Redux/Employees/Employees.ts"
 
 const Navbar: React.FC = () => {
     const currentView = useAppSelector((state: RootState) => state.homepage.currentView);
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate();
-    const {  i18n } = useTranslation();
+    const dispatch = useAppDispatch();
+    const { i18n } = useTranslation();
+
+    const { data: employeeData, isLoading, error } = useGetEmployeeAccountQuery();
 
     const CURRENT_LANG = i18n.language;
     const SHOW_BACK_BUTTON = currentView !== "dashboard";
@@ -23,20 +22,23 @@ const Navbar: React.FC = () => {
         i18n.changeLanguage(newLang);
     };
 
-    const Settings = (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                           stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                           className="lucide lucide-bolt-icon lucide-bolt">
-        <path
-            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-        <circle cx="12" cy="12" r="4"/>
-    </svg>)
+    const Settings = (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+             className="lucide lucide-bolt-icon lucide-bolt">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <circle cx="12" cy="12" r="4"/>
+        </svg>
+    );
 
-    const Back = (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                       className="lucide lucide-step-back-icon lucide-step-back">
-        <path d="M13.971 4.285A2 2 0 0 1 17 6v12a2 2 0 0 1-3.029 1.715l-9.997-5.998a2 2 0 0 1-.003-3.432z"/>
-        <path d="M21 20V4"/>
-    </svg>)
+    const Back = (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+             className="lucide lucide-step-back-icon lucide-step-back">
+            <path d="M13.971 4.285A2 2 0 0 1 17 6v12a2 2 0 0 1-3.029 1.715l-9.997-5.998a2 2 0 0 1-.003-3.432z"/>
+            <path d="M21 20V4"/>
+        </svg>
+    );
 
     const viewTitles: Record<string, string> = {
         "dashboard": "HomePage",
@@ -46,24 +48,11 @@ const Navbar: React.FC = () => {
     };
     const sectionName = viewTitles[currentView] || 'HomePage';
 
-    const {
-        restaurantNameEn,
-        fullNameEn,
-        imageUrl,
-        loading,
-        error,
-    } = useSelector((state: RootState) => state.restaurantEmployees);
-
-    useEffect(() => {
-        dispatch(fetchRestaurantEmployees());
-    }, [dispatch]);
-
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (isLoading) return <div className="h-16 flex items-center px-4">Loading...</div>;
+    if (error) return <div className="h-16 flex items-center px-4">Error loading profile</div>;
 
     return (
         <div className="flex flex-row justify-between items-center w-full h-16 sm:h-20 px-2 sm:px-4">
-
             <div className="flex items-center">
                 {SHOW_BACK_BUTTON ? (
                     <button
@@ -81,7 +70,6 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="flex flex-row items-center gap-x-2 sm:gap-x-4">
-
                 <button
                     type="button"
                     onClick={handleLanguageToggle}
@@ -99,20 +87,21 @@ const Navbar: React.FC = () => {
                     </div>
                 </button>
 
-                <div
-                    className="flex flex-row gap-x-2 items-center p-1 sm:p-2 hover:bg-gray-100 rounded-full cursor-pointer transition duration-150"
-                >
+                <div className="flex flex-row gap-x-2 items-center p-1 sm:p-2 hover:bg-gray-100 rounded-full cursor-pointer transition duration-150">
                     <img
-                        src={imageUrl || undefined}
-                        alt={restaurantNameEn}
+                        src={employeeData?.imageUrl || undefined}
+                        alt={employeeData?.restaurantNameEn}
                         className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
                     />
                     <div className="text-left hidden md:block">
-                        <p className="text-sm sm:text-md font-bold truncate max-w-[150px]">{restaurantNameEn}</p>
-                        <p className="text-xs sm:text-sm text-gray-400 truncate max-w-[150px]">{fullNameEn}</p>
+                        <p className="text-sm sm:text-md font-bold truncate max-w-[150px]">
+                            {employeeData?.restaurantNameEn}
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-400 truncate max-w-[150px]">
+                            {employeeData?.fullNameEn}
+                        </p>
                     </div>
                 </div>
-
             </div>
         </div>
     );

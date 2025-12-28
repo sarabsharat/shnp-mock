@@ -1,33 +1,49 @@
-import DashboardBody from "./DashboardBody.tsx";
-import Navbar from "../Navbar.tsx";
-import Sidebar from "../Sidebar.tsx";
-import { Routes, Route } from "react-router-dom";
-import ManageEmployees from "../ManageEmployees.tsx";
-import Settings from "../Settings.tsx"
+import Card from "../../Components/Card.tsx";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../Store/hooks.tsx";
+import { fetchDashboardCounts } from "../../Redux/Dashboard/DashboardThunk.tsx";
+import {useTranslation} from "react-i18next";
+import { EmployeesApi } from "../../Redux/Employees/Employees.ts";
 
-function Dashboard() {
+
+const Dashboard = () => {
+    const dispatch = useAppDispatch();
+    const { t} = useTranslation();
+    const prefetchEmployees = EmployeesApi.usePrefetch('searchRestaurantEmployee');
+    const { subscriptions, delivery, pickup, deliveredOrders, paidAmount, loading } = useAppSelector(
+        (state) => state.dashboard
+    );
+
+    useEffect(() => {
+        dispatch(fetchDashboardCounts())
+        prefetchEmployees({
+            locale: 'en',
+            limit: 10,
+            offset: 0
+        });
+
+        console.log("🚀 Dashboard mounted: Prefetching Manage Employees data in background...");
+    }, [dispatch, prefetchEmployees]);
+
+    if (loading) return <div>Loading...</div>;
 
     return (
-        <div className="lg:flex lg:h-screen lg:overflow-hidden">
-            <div className="lg:w-64 lg:flex-shrink-0">
-                <Sidebar />
-            </div>
+        <div className="w-full ">
+            <div className="
+    flex flex-col gap-4      =
+    sm:grid sm:grid-cols-2 sm:gap-6
+    lg:flex lg:flex-row lg:flex-wrap lg:gap-8 lg:justify-center
 
-            <div className="flex-1 flex flex-col">
-                <div className="border-b-2 border-gray-200 pb-2 mb-5">
-                    <Navbar />
-                </div>
-                <div className="flex-1 overflow-auto w-full">
-                    <Routes>
-                        <Route path="/dashboard" element={<DashboardBody />} />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route path="/manageEmployees" element={<ManageEmployees />} />
-                    </Routes>
-                </div>
-
+    w-full
+">
+                <Card name={t(`subscription`)} number={subscriptions} label="Subscriptions"/>
+                <Card name={t(`deliverySubscription`)} number={delivery} label="Subscriptions"/>
+                <Card name={t(`pickupSubscriptions`)} number={pickup} label="Subscriptions"/>
+                <Card name={t(`deliveryOrders`)} number={deliveredOrders} label="Orders"/>
+                <Card name={t(`amountsPaid`)} number={paidAmount} label="SAR"/>
             </div>
         </div>
     );
+};
 
-}
 export default Dashboard;

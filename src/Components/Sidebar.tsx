@@ -163,7 +163,7 @@ function Sidebar() {
 
             {isMobileMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-gray-950/50 z-10 lg:hidden"
+                    className="fixed inset-0 bg-gray-950/50 z-9 lg:hidden"
                     onClick={() => setIsMobileMenuOpen(false)}
                 />
             )}
@@ -171,7 +171,7 @@ function Sidebar() {
             <div
                 ref={sidebarRef}
                 className={`
-                    fixed top-0 left-0 bg-white text-gray-400 transition-transform transform ease-in-out duration-300
+                    fixed top-0 left-0 bg-white text-gray-400 z-10 transition-transform transform ease-in-out duration-300
                      2xl:w-full h-screen overflow-y-auto                       
                     lg:static lg:translate-x-0 lg:w-64 lg:flex-shrink-0 lg:h-screen lg:overflow-y-auto  
                     ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}

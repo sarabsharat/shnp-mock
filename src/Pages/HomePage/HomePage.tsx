@@ -22,7 +22,7 @@ export const HomePage = () => {
     return (
         <div className="flex gap-x-4 max-w-full overflow-x-hidden justify-between h-screen">
 
-           <div className="h-full flex-shrink-0 2xl:w-80 border-r-1 border-gray-200">
+           <div className="h-full flex-shrink-0 z-10 2xl:w-80 border-r-1 border-gray-200">
                 <Sidebar />
             </div>
 

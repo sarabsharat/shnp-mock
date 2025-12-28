@@ -4,10 +4,11 @@ import authReducer from "../Redux/User/UserSlice.tsx"
 import DashboardReducer from "../Redux/Dashboard/DashboardSlice.tsx";
 import RestaurantEmployeesReducer from "../Redux/Navbar/NavbarSlice.tsx";
 import RestaurantSlice from "../Redux/Restaurant/RestaurantSlice.tsx";
-import EmployeesSlice from "../Redux/Employees/EmployeesSlice.tsx";
 import {subscriptionReducer} from "../Redux/CustomerSubscription/SubscriptionSlice.tsx";
 import {packagesReducer} from "../Redux/SubscriptionPackages/packagesSlice.tsx";
 import homepageReducer from "../Redux/Homepage/NavigationSlice.tsx";
+import {EmployeesApi} from "../Redux/Employees/Employees.ts";
+import employeesSlice from "../Redux/Employees/EmployeesSlice.tsx";
 
 
 export const index = configureStore({
@@ -16,11 +17,14 @@ export const index = configureStore({
         dashboard: DashboardReducer,
         restaurantEmployees:RestaurantEmployeesReducer,
         restaurant:RestaurantSlice,
-        employees:EmployeesSlice,
+        employees:employeesSlice,
         subscription:subscriptionReducer,
         packages:packagesReducer,
-        homepage:homepageReducer
+        homepage:homepageReducer,
+        [EmployeesApi.reducerPath]: EmployeesApi.reducer,
     },
+    middleware:(getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(EmployeesApi.middleware),
 });
 
 export type RootState = ReturnType<typeof index.getState>;

@@ -1,28 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRestaurantEmployees } from "./NavbarThunk.tsx";
-import {initialValues} from "../../Models/UserInterface.ts"
-// this shows the owner of the account(main User)
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { initialState } from "../../Models/EmployeesInterface.ts";
 
-
-const RestaurantEmployeesSlice = createSlice({
-    name: "restaurantEmployees",
-    initialState: initialValues,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchRestaurantEmployees.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(fetchRestaurantEmployees.fulfilled, (state, action) => {
-                state.loading = false;
-                Object.assign(state, action.payload);
-            })
-            .addCase(fetchRestaurantEmployees.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
-            });
+const EmployeesSlice = createSlice({
+    name: "employees",
+    initialState,
+    reducers: {
+        setAcceptedFilter(state, action: PayloadAction<boolean | null>) {
+            state.accepted = action.payload;
+            state.offset = 0;
+        },
+        setPage(state, action: PayloadAction<number>) {
+            state.offset = action.payload * state.limit;
+        },
+        setLimit(state, action: PayloadAction<number>) {
+            state.limit = action.payload;
+            state.offset = 0;
+        }
     },
-});
+   });
 
-export default RestaurantEmployeesSlice.reducer;
+export const { setAcceptedFilter, setPage, setLimit } = EmployeesSlice.actions;
+export default EmployeesSlice.reducer;

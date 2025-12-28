@@ -1,0 +1,35 @@
+export const initialValues = {
+    fullNameAr: "",
+    fullNameEn: "",
+    userName: "",
+    email: "",
+    mobile: "",
+    owner: false,
+    gender: "",
+    dateOfBirth: "",
+    confirmed: false,
+    accepted: false,
+    restaurantNameAr: "",
+    restaurantNameEn: "",
+    restaurantEmail: "",
+    restaurantCity: null as string | null,
+    restaurantDistrict: null as string | null,
+    restaurantFoodCategories: [] as number[],
+    restaurantNumberOfBranches: 0,
+    restaurantManagementPhoneNumber: "",
+    restaurantTwitterSocialMediaLink: "",
+    restaurantInstagramSocialMediaLink: "",
+    restaurantRestaurantStatus: "",
+    id: 0,
+    iban: "",
+    commercialRegistrationNumber: "",
+    roles: [] as Array<{
+        code: string;
+        name: string;
+        privileges: string[];
+    }>,
+    foodCategories: [] as string[],
+    imageUrl: "",
+    loading: false,
+    error: null as string | null,
+};
