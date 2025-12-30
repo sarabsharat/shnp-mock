@@ -4,19 +4,19 @@ import {
     useSearchRestaurantEmployeeQuery,
     useUpdateEmployeeMutation,
     useInviteEmployeeMutation
-} from "../../../Redux/Employees/Employees.ts";
-import { setAcceptedFilter, setPage } from "../../../Redux/Employees/EmployeesSlice.tsx";
-import type { RootState } from "../../../Store";
-import Modal from "../../../Components/Modal.tsx";
+} from "../../Redux/Employees/Employees.ts";
+import { setAcceptedFilter, setPage } from "../../Redux/Employees/EmployeesSlice.tsx";
+import type { RootState } from "../../Store";
+import Modal from "../../Components/Modal.tsx";
 import { useTranslation } from "react-i18next";
 import { Form, Formik } from "formik";
-import Input from "../../../Components/Input.tsx";
+import Input from "../../Components/Input.tsx";
 import type { FormikHelpers } from "formik";
-import { useAppDispatch } from "../../../Store/hooks.tsx";
-import type { Role, Employee, InvitePayload, EmployeeFormValues } from "../../../Models/ManageEmployeesInterface.ts";
-import { initialInviteValues } from "../../../Models/ManageEmployeesInterface.ts";
-import { validationSchemaInvite } from "../../../Redux/Employees/ValidationSchema.ts";
-import { notifyError, notifySuccess } from "../../../utilities/Notify.ts";
+import { useAppDispatch } from "../../Hooks/Redux.tsx";
+import type { Role, Employee, InvitePayload, EmployeeFormValues } from "../../Models/ManageEmployeesInterface.ts";
+import { initialInviteValues } from "../../Models/ManageEmployeesInterface.ts";
+import { validationSchemaInvite } from "../../Redux/Employees/ValidationSchema.ts";
+import { notifyError, notifySuccess } from "../../utilities/Notify.ts";
 
 const ALL_ROLES: Role[] = [
     { code: "all", name: "All" },
@@ -32,13 +32,14 @@ const formatRoles = (roles: Role[] | null): string => {
 };
 
 export const ManageEmployees = () => {
-    const dispatch = useAppDispatch();
     const { t, i18n } = useTranslation();
 
 
-    const { limit, offset, accepted, locale } = useSelector((state: RootState) => state.employees);
+    const [offset, setOffset] = useState(0);
+    const [accepted, setAccepted] = useState<boolean | null>(null);
+    const limit = 10;
     const { data, isLoading, isFetching } = useSearchRestaurantEmployeeQuery({
-        locale,
+        locale: i18n.language,
         limit,
         offset,
         accepted: accepted === null ? undefined : accepted,
@@ -55,22 +56,20 @@ export const ManageEmployees = () => {
 
     const headerTitles = [t(`name`), t(`email`), t(`mobile`), t(`roles`), t(`status`), t(`actions`)];
 
+
     const currentPage = Math.floor(offset / limit);
     const totalPages = Math.ceil(total / limit);
 
     const handlePageChange = (newPageIndex: number) => {
-        if (newPageIndex >= 0 && newPageIndex < totalPages) {
-            dispatch(setPage(newPageIndex));
-        }
+        setOffset(newPageIndex * limit);
     };
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
-        let acceptedValue: boolean | null = null;
-        if (value === "Accepted") acceptedValue = true;
-        else if (value === "Pending") acceptedValue = false;
-
-        dispatch(setAcceptedFilter(acceptedValue));
+        setOffset(0);
+        if (value === "Accepted") setAccepted(true);
+        else if (value === "Pending") setAccepted(false);
+        else setAccepted(null);
     };
 
     const getFilterValue = () => {

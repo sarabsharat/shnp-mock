@@ -15,9 +15,9 @@ function Modal  ({onClose, children,text}:Props) {
 
   return (
       <>
-          <div className="w-full h-full bg-gray-950/50 flex inset-0 items-center justify-evenly fixed"
+          <div className="w-full h-full z-[999] bg-gray-950/50 flex inset-0 items-center justify-evenly fixed"
                onClick={onClose}>
-              <div className="flex flex-wrap bg-white z-999 rounded-lg shadow-xl   p-4 w-[85%]"
+              <div className="flex flex-wrap bg-white  rounded-lg shadow-xl   p-4 w-[85%]"
                    onClick={(e) => e.stopPropagation()}>
                   <div className="flex flex-row justify-between pb-2 border-b-1 w-full"><p
                       className="text-sm text-shnp-orange 2xl:text-5xl">{text}</p>

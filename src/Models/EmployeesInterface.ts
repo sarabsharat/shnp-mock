@@ -6,6 +6,18 @@ export interface FetchEmployeesPayload {
     accepted: boolean | null;
 }
 
+export interface ResponsePayload {
+    locale: string;
+    limit: number;
+    offset: number;
+
+}
+
+export interface DataModel extends ResponsePayload {
+    name: string;
+    id:number
+}
+
 export interface EmployeePayload {
     dateOfBirth: string | null;
     email: string;

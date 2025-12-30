@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <Provider store={index}>
       <BrowserRouter>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-between items-center">
           <Routes>
               <Route path="/Register" element={<ParentForm />} />
               <Route path="/success" element={<Thankyou />} />

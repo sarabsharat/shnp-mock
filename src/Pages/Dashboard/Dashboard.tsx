@@ -1,6 +1,6 @@
 import Card from "../../Components/Card.tsx";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../Store/hooks.tsx";
+import { useAppDispatch, useAppSelector } from "../../Hooks/Redux.tsx";
 import { fetchDashboardCounts } from "../../Redux/Dashboard/DashboardThunk.tsx";
 import {useTranslation} from "react-i18next";
 import { EmployeesApi } from "../../Redux/Employees/Employees.ts";

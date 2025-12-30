@@ -1,6 +1,6 @@
 import {Navigate} from "react-router-dom";
 import type {ReactNode} from "react";
-import {useAppSelector} from "../Store/hooks.tsx";
+import {useAppSelector} from "../Hooks/Redux.tsx";
 
 
 

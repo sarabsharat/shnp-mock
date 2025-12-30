@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import "../i18next.ts";
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from "../Store/hooks.tsx";
+import { useAppDispatch, useAppSelector } from "../Hooks/Redux.tsx";
 import { setView } from "../Redux/Homepage/NavigationSlice.tsx";
 import type { RootState } from "../Store";
 import { useGetEmployeeAccountQuery } from "../Redux/Employees/Employees.ts"
@@ -41,12 +41,12 @@ const Navbar: React.FC = () => {
     );
 
     const viewTitles: Record<string, string> = {
-        "dashboard": "HomePage",
+        "dashboard": "Home Page",
         "settings": "Settings",
         "manageEmployees": "Manage Employees",
         "subscription": "Subscriptions",
     };
-    const sectionName = viewTitles[currentView] || 'HomePage';
+    const sectionName = viewTitles[currentView];
 
     if (isLoading) return <div className="h-16 flex items-center px-4">Loading...</div>;
     if (error) return <div className="h-16 flex items-center px-4">Error loading profile</div>;
@@ -60,12 +60,12 @@ const Navbar: React.FC = () => {
                         className="flex items-center gap-1 sm:gap-2 p-1 sm:p-2 text-gray-800 text-sm sm:text-base hover:text-shnp-orange"
                     >
                         {Back}
-                        <span className="hidden sm:inline">{sectionName}</span>
+                        <span className="hidden sm:inline custom-font-reg sm:text-xl font-bold">{sectionName}</span>
                     </button>
                 ) : (
-                    <h1 className="text-lg custom-font-reg sm:text-xl font-bold text-gray-800">
+                    <p className="text-lg custom-font-reg sm:text-xl font-bold text-gray-800">
                         {sectionName}
-                    </h1>
+                    </p>
                 )}
             </div>
 

@@ -4,7 +4,7 @@ import logo from "../../media/logo.png";
 import {logout} from "../Redux/User/UserSlice.tsx";
 import { useNavigate } from 'react-router-dom';
 import {useTranslation} from "react-i18next";
-import {useAppDispatch} from "../Store/hooks.tsx"
+import {useAppDispatch} from "../Hooks/Redux.tsx"
 import { setView } from "../Redux/Homepage/NavigationSlice.tsx"
 
 function Sidebar() {
@@ -171,7 +171,7 @@ function Sidebar() {
             <div
                 ref={sidebarRef}
                 className={`
-                    fixed top-0 left-0 bg-white text-gray-400 z-10 transition-transform transform ease-in-out duration-300
+                    fixed top-0 left-0 bg-white text-gray-400 z-9 transition-transform transform ease-in-out duration-300
                      2xl:w-full h-screen overflow-y-auto                       
                     lg:static lg:translate-x-0 lg:w-64 lg:flex-shrink-0 lg:h-screen lg:overflow-y-auto  
                     ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
@@ -232,10 +232,11 @@ function Sidebar() {
                                 </button>
                             </li>
                             <li className="flex justify-start items-center">
-                                <button
+                                <button onClick={() => handleNavigation("openingTimes")}
+
                                     className="custom-font-reg flex items-center gap-3 px-3 py-2 rounded-full w-full focus:bg-shnp-orange focus:text-white text-gray-400 active:bg-shnp-orange active:text-white hover:bg-shnp-orange-light hover:text-shnp-orange transition-colors duration-200"
                                 >
-                                    {History2} {t(`openingTimes`)}
+                                    {History2} {t(`openingTimes.openingTimes`)}
                                 </button>
                             </li>
                         </ul>

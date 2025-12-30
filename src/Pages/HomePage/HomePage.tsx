@@ -1,43 +1,47 @@
 import Navbar from "../../Components/Navbar.tsx";
 import Sidebar from "../../Components/Sidebar.tsx";
 import Dashboard from "../../Pages/Dashboard/Dashboard.tsx";
-import {Subscription} from "../../Pages/HomePage/Subscriptions/Subscription.tsx";
-import Settings from "../../Pages/HomePage/Settings/Settings.tsx"
-import ManageEmployees from "../../Pages/HomePage/ManageEmployees/ManageEmployees.tsx";
-import {useAppSelector} from "../../Store/hooks.tsx";
-
+import {Subscription} from "../Subscriptions/Subscription.tsx";
+import Settings from "../Settings/Settings.tsx"
+import ManageEmployees from "../ManageEmployees/ManageEmployees.tsx";
+import {useAppSelector} from "../../Hooks/Redux.tsx";
+import {OpeningTimes} from "../OpeningTimes/OpeningTimes.tsx";
+import {
+    Box,
+   } from '@mui/material';
 
 export const HomePage = () => {
     const currentView = useAppSelector((state) => state.homepage.currentView);
+
     const showChildren = () => {
         switch (currentView) {
             case 'dashboard': return <Dashboard />;
             case 'settings': return <Settings />;
             case 'manageEmployees': return <ManageEmployees />;
             case 'subscription': return <Subscription />;
+            case 'openingTimes': return <OpeningTimes />;
             default: return <Dashboard />;
         }
     };
 
     return (
-        <div className="flex gap-x-4 max-w-full overflow-x-hidden justify-between h-screen">
-
-           <div className="h-full flex-shrink-0 z-10 2xl:w-80 border-r-1 border-gray-200">
+        <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+            <Box sx={{ width: { xs: 0, md: 280, '2xl': 320 }, flexShrink: 0, borderRight: '1px solid #eee' }}>
                 <Sidebar />
-            </div>
+            </Box>
 
-            <div className="flex-1 flex flex-col w-full">
-
-                <div className="border-b-2 border-gray-200 pb-2 mb-5 sticky top-0 bg-white  flex-shrink-0">
+            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+                <Box sx={{ position: 'sticky', top: 0, zIndex: 9, bgcolor: 'white', borderBottom: '1px solid #eee' }}>
                     <Navbar />
-                </div>
+                </Box>
 
-               <div className="flex-1 z-1 overflow-y-auto">
-                   {showChildren()}
-                </div>
-            </div>
-        </div>
-    )
+                <Box component="main" sx={{ flexGrow: 1, overflowY: 'auto', width: '100%' }}>
 
-}
-
+                    <Box sx={{ width: '100%' }}>
+                        {showChildren()}
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+                );
+};

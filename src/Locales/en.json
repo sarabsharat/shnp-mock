@@ -120,6 +120,17 @@
   "mobile": "Mobile",
   "roles": "Roles",
   "actions": "Actions",
-  "status": "Status"
-
+  "status": "Status",
+  "openingTimes": {
+    "openingTimes": "Opening Times",
+    "am": "AM",
+    "pm": "PM",
+    "from": "From",
+    "to": "To",
+    "errorInterval": "Closing time must be after opening time",
+    "errorOverlap": "This time slot overlaps with an existing one!",
+    "updateSuccess": "Opening times updated successfully"
+  },
+  "confirm": "Confirm",
+  "cancel": "Cancel"
 }

@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 import {notifyError, notifySuccess} from "../../utilities/Notify.ts";
 import {Link} from "react-router-dom";
 import {resetPassword} from "../../Redux/User/UserThunk.tsx";
-import {useAppDispatch} from "../../Store/hooks.tsx";
+import {useAppDispatch} from "../../Hooks/Redux.tsx";
 
 
 export const PasswordReset = ()=> {

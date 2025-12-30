@@ -8,7 +8,7 @@ import {validationSchemaLogin} from "./ValidationSchema.ts";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from '../../Store/hooks.tsx';
+import { useAppDispatch, useAppSelector } from '../../Hooks/Redux.tsx';
 import { loginUser } from "../../Redux/User/UserThunk.tsx";
 import { notifyError, notifySuccess } from "../../utilities/Notify.ts";
 

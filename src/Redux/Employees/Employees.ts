@@ -34,7 +34,7 @@ export const EmployeesApi = createApi({
             }),
         }),
 
-        searchRestaurantEmployee: builder.query<any, any>({
+        searchRestaurantEmployee: builder.query<EmployeePayload, any>({
             query: (params) => ({
                 url: 'restaurantEmployees',
                 method: "GET",
@@ -73,7 +73,6 @@ export const EmployeesApi = createApi({
 
 export const {
     useGetEmployeeAccountQuery,
-    useLazySearchRestaurantEmployeeQuery,
     useSearchRestaurantEmployeeQuery,
     useInviteEmployeeMutation,
     useUpdateEmployeeMutation

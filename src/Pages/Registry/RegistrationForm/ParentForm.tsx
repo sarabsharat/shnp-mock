@@ -9,7 +9,7 @@ import "../../../i18next.ts"
 import { useTranslation } from 'react-i18next';
 import { notifySuccess, notifyError} from "../../../utilities/Notify.ts"
 import {registerUser} from "../../../Redux/User/UserThunk.tsx";
-import {useAppDispatch} from "../../../Store/hooks.tsx";
+import {useAppDispatch} from "../../../Hooks/Redux.tsx";
 
 
 const ParentForm = () => {

@@ -1,11 +1,11 @@
-import '../../../App.css';
+import '../../App.css';
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { fetchSubscription, searchBranches } from "../../../Redux/CustomerSubscription/SubscriptionThunk.tsx";
-import { setOffset as setSubscriptionOffset, setBranchId, setSubscriptionType, setPackageNameFilter, setNumberOfMealsFilter } from "../../../Redux/CustomerSubscription/SubscriptionSlice.tsx"
-import type {  RootState } from "../../../Store";
-import { fetchPackages} from "../../../Redux/SubscriptionPackages/packagesThunk.tsx"
-import {useAppDispatch} from "../../../Store/hooks.tsx";
+import { fetchSubscription, searchBranches } from "../../Redux/CustomerSubscription/SubscriptionThunk.tsx";
+import { setOffset as setSubscriptionOffset, setBranchId, setSubscriptionType, setPackageNameFilter, setNumberOfMealsFilter } from "../../Redux/CustomerSubscription/SubscriptionSlice.tsx"
+import type {  RootState } from "../../Store";
+import { fetchPackages} from "../../Redux/SubscriptionPackages/packagesThunk.tsx"
+import {useAppDispatch} from "../../Hooks/Redux.tsx";
 
 const useAutocompleteFilter = <T,>(
     items: T[],

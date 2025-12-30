@@ -108,7 +108,7 @@ body {
   display: flex;
     align-items: center;
   place-items: center;
-  min-width: fit-content;
+  min-width: 780px;
     min-height: fit-content;
     max-width: 2560px;
     max-height:1740px ;
